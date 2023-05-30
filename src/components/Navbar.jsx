@@ -50,7 +50,7 @@ export const Navbar = () => {
             <div>
                 
                 <div className="absolute left-0 right-0 bottom-0 mx-auto    text-lg flex justify-around w-[400px] h-[60px] items-center">
-                    <MyLink lien={"annonce"} name={"Annoncement"} id={1} />
+                    <MyLink lien={"annonce"} name={"Annoncements"} id={1} />
                     <MyLink lien={"users"} name={"Users"} id={3}  />
                     <MyLink lien={"chatroom"} name={"Chats"} id={2}  />
                 </div>

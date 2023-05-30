@@ -2,38 +2,37 @@ import * as React from 'react';
 import { useState } from 'react';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Toolbar, Edit, Inject, Search, Selection } from '@syncfusion/ej2-react-grids';
 import { BiHide, BiShow } from 'react-icons/bi'
-import { Link } from 'react-router-dom';
-import {users} from '../data'
+import { users } from '../../data'
 import { motion, AnimatePresence } from 'framer-motion'
 import axios from 'axios';
 import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 
-const data = []
 
 
 
-function FilterBar({setData,data}) {
+function FilterBar({ setData, data }) {
     const initialstates = { association: true, donateur: true }
     const [filters, setFilters] = useState(initialstates);
     const [show, setShow] = useState(false);
     function setFilter(filter) {
         setFilters({ ...filters, [filter]: !filters[filter] });
     }
-    useEffect(()=>{
+    useEffect(() => {
 
-        new Array(users).forEach(element => {
-            if(filters.association===true && element.type==="Association"){
-                setData([...data,users[i]])
-            }
-            if(filters.donateur===true && element.type==="Donateur"){
-                setData([...data,element])
-            }
-            
-        });
+        // new Array(data.users).forEach(element => {
+        //     if(filters.association===true && element.type==="Association"){
+        //         setData([...data,data.users[i]])
+        //     }
+        //     if(filters.donateur===true && element.type==="Donateur"){
+        //         setData([...data,element])
+        //     }
+
+        // });
     }
-    ,[])
-   
+        , [])
+
     const activelink = "w-full h-12 flex items-center justify-start rounded-lg text-white bg-red-300 shadow-md pl-2 "
     const normalLink = "w-full h-12 flex items-center justify-start shadow-md bg-gray-100 rounded-lg border-gray-300  pl-2 border-[1px]"
     return (
@@ -76,7 +75,7 @@ export function Users() {
     const validationRules = { required: true };
     const orderidRules = { required: true, number: true };
     const pageSettings = { pageCount: 5 };
-    
+
     const [data, setData] = React.useState([]);
 
     function actionComplete(args) {
@@ -104,22 +103,44 @@ export function Users() {
             });
     }, [])
 
+    function handleProfile(props) {
+            if (props.type === "Donateur") {
+              navigate('/donateur');
+            } else {
+              navigate('/users/'+(props.id));
+            }
+         
+        // console.log(rowData)
+    }
+
+
+    const navigate = useNavigate();
+
     return (
         <>
-            <FilterBar/>
+            <FilterBar />
             <div className='control-pane   absolute m-auto max-w-screen-xl'>
                 <div className=' bg-white rounded-xl overflow-hidden border-2 drop-shadow-md p-6'>
                     <div className='control-section'>
-                        <GridComponent  dataSource={data} toolbar={toolbarOptions} t allowSelecting={true} allowPaging={true} enableStickyHeader={true} editSettings={editSettings} pageSettings={pageSettings} actionComplete={actionComplete}>
+                        <GridComponent dataSource={users} toolbar={toolbarOptions} t allowSelecting={true} allowPaging={true} enableStickyHeader={true} editSettings={editSettings} pageSettings={pageSettings} actionComplete={actionComplete}>
                             <ColumnsDirective>
                                 <ColumnDirective field="nom" headerText="Nom" validationRules={validationRules}  ></ColumnDirective>
                                 <ColumnDirective field="prenom" headerText="Prenom" validationRules={validationRules} ></ColumnDirective>
                                 <ColumnDirective field="email" headerText='Email' validationRules={validationRules}  ></ColumnDirective>
-                                <ColumnDirective field='telephone' headerText='Telephone'  validationRules={orderidRules} ></ColumnDirective>
+                                <ColumnDirective field='telephone' headerText='Telephone' validationRules={orderidRules} ></ColumnDirective>
                                 <ColumnDirective field='type' headerText='Type' validationRules={validationRules} ></ColumnDirective>
-                                <ColumnDirective field='organisme' headerText="Nom D'organisme"   validationRules={validationRules} ></ColumnDirective>
-                                <ColumnDirective field='description' headerText="Description"   validationRules={validationRules} ></ColumnDirective>
-                                
+                                <ColumnDirective field='organisme' headerText="Nom D'organisme" validationRules={validationRules} ></ColumnDirective>
+                                <ColumnDirective field='description' headerText="Description" validationRules={validationRules} ></ColumnDirective>
+                                <ColumnDirective
+                                    
+                                    
+                                    template={(props) => (
+                                        <button className='bg-red-300 text-white w-3/4 p-1 rounded-lg' onClick={() => handleProfile(props)}>profile</button>
+                                    )}
+                                ></ColumnDirective>
+
+
+
                             </ColumnsDirective>
                             <Inject services={[Page, Toolbar, Edit, Search, Selection]} />
                         </GridComponent>

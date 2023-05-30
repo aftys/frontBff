@@ -1,18 +1,18 @@
 import { useState } from "react"
 import { motion } from 'framer-motion'
 import { Link } from "react-router-dom"
-import {annonces as test} from '../../data'
+// import {offres as test} from '../../data'
 import { useEffect } from "react"
 import axios from "axios"
 
-function AnnonceCard({annonce}) {
+function OffreCard({offre}) {
 
     return (
         <article  class=" drop-shadow-md rounded-xl  border border-gray-300 bg-gray-100 p-4">
             <div class="flex items-center gap-4">
 
-                <Link to={`/annonce/${1}`}><div>
-                    <h3 class="text-lg font-medium text-black hover:underline">{annonce.titre}</h3>
+                <Link to={`/offre/${1}`}><div>
+                    <h3 class="text-lg font-medium text-black hover:underline">{offre.titre}</h3>
                 </div></Link>
             </div>
             <ul class="mt-4 space-  y-2">
@@ -24,7 +24,7 @@ function AnnonceCard({annonce}) {
                         <strong class="font-medium text-gray-400">Details</strong>
 
                         <p class="mt-1 text-xs font-medium text-gray-500">
-                           {annonce.description}
+                           {offre.description}
                         </p>
                     </a>
                 </li>
@@ -35,7 +35,7 @@ function AnnonceCard({annonce}) {
 
 
 
-function AnnonceNav({ setCurrentAssociationType, association }) {
+function OffreNav({ setCurrentAssociationType, association }) {
     return (
 
         <nav className="absolute top-0 bg-gray-100 h-12 w-full flex pt-1 px-1  relative rounded-t-md">
@@ -49,25 +49,25 @@ function AnnonceNav({ setCurrentAssociationType, association }) {
 }
 
 
-export function AnnoncePage() {
+export function OffrePage() {
     const initialStates = { refuse: false, enCours: false, fini: false, nonTraite: false }
     const [association, setAssociation] = useState({ refuse: false, enCours: true, fini: false, nonTraite: false });
-    const [annonces, setAnnonces] = useState(test);
+    // const [offres, setOffres] = useState(test);
     function setCurrentAssociationType(link) {
         setAssociation({ ...initialStates, [link]: !association[link] })
 
     }
     useEffect(
         ()=>{
-            // axios.get(`http://localhost:8080/annonces/association/${2}`).then(res=>setAnnonces(res.data)).catch(err=>console.log(err))
+            // axios.get(`http://localhost:8080/offres/association/${2}`).then(res=>setOffres(res.data)).catch(err=>console.log(err))
         },[]
     )
     return (
 
         <div className="relative w-full  max-w-screen-lg bg-white rounded-md drop-shadow-md  overfolw-hidden ">
-            <AnnonceNav setCurrentAssociationType={setCurrentAssociationType} association={association} />
+            <OffreNav setCurrentAssociationType={setCurrentAssociationType} association={association} />
             <div className=" grid grid-cols-2  gap-3 p-4">
-                {annonces.map((annonce,index)=>(<AnnonceCard key={index} annonce={annonce}/>))}
+                {/* {offres.map((offre,index)=>(<OffreCard key={index} offre={offre}/>))} */}
             </div>
         </div>
     )

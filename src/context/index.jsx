@@ -14,6 +14,7 @@ export const ContextProvider = ({ children }) => {
   const [isClicked, setIsClicked] = useState(initialState);
   const [currentColor,setColor]=useState("#fca5a5")
   const [currentMode,setCurrentMode]=useState("Light")
+  const [association,setAssociation]=useState(null)
   const handleClick = (clicked) => {
     const notClicked=isClicked[clicked];
     setIsClicked({ ...initialState, [clicked]: !notClicked });
@@ -26,7 +27,7 @@ function setMode(mode){
   
   return (
     
-    <StateContext.Provider value={{initialState,activeMenu, setActiveMenu,isClicked, setIsClicked,handleClick,currentColor,setColor,currentMode,setMode}}>
+    <StateContext.Provider value={{initialState,activeMenu, setActiveMenu,isClicked, setIsClicked, association,setAssociation,handleClick,currentColor,setColor,currentMode,setMode}}>
       {children}
     </StateContext.Provider>
   );
